@@ -1,0 +1,214 @@
+<!doctype html>
+<html class="no-js fixed-layout">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Amaze UI Admin index Examples</title>
+  <meta name="description" content="这是一个 index 页面">
+  <meta name="keywords" content="index">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <link rel="icon" type="image/png" href="../static/assets/i/favicon.png">
+  <link rel="apple-touch-icon-precomposed" href="../static/assets/i/app-icon72x72@2x.png">
+  <meta name="apple-mobile-web-app-title" content="Amaze UI" />
+  <link rel="stylesheet" href="../static/assets/css/amazeui.min.css"/>
+  <link rel="stylesheet" href="../static/assets/css/admin.css">
+  <script src="../static/assets/js/jquery.min.js"></script>
+  <script src="../static/assets/js/amazeui.min.js"></script>
+  <script src="../static/assets/js/app.js"></script>
+</head>
+<body>
+
+
+<header class="am-topbar am-topbar-inverse admin-header">
+  <div class="am-topbar-brand">
+    <strong>教学成绩</strong> <small>后台管理</small>
+  </div>
+
+  <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only" data-am-collapse="{target: '#topbar-collapse'}"><span class="am-sr-only">导航切换</span> <span class="am-icon-bars"></span></button>
+
+  <div class="am-collapse am-topbar-collapse" id="topbar-collapse">
+
+    <ul class="am-nav am-nav-pills am-topbar-nav am-topbar-right admin-header-list">
+      <li class="am-dropdown" data-am-dropdown>
+        <a class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
+          <span class="am-icon-users"></span> 管理员 <span class="am-icon-caret-down"></span>
+        </a>
+        <ul class="am-dropdown-content">
+          <li><a href="#"><span class="am-icon-user"></span> 资料</a></li>
+          <li><a href="#"><span class="am-icon-cog"></span> 设置</a></li>
+          <li><a href="/"><span class="am-icon-power-off"></span> 退出</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</header>
+
+<div class="am-cf admin-main">
+  <!-- sidebar start -->
+  <div class="admin-sidebar am-offcanvas" id="admin-offcanvas">
+    <div class="am-offcanvas-bar admin-offcanvas-bar">
+      <ul class="am-list admin-sidebar-list">
+        <li><a href="/admin_index"><span class="am-icon-home"></span> 首页</a></li>
+        <li><a href="{{ url_for('statistic', utype='student') }}"><span class="am-icon-table"></span> 学生统计</a></li>
+        <li><a href="{{ url_for('statistic', utype='teacher') }}"><span class="am-icon-pencil-square-o"></span> 教师统计</a></li>
+        <li><a href="{{ url_for('statistic', utype='course') }}"><span class="am-icon-calendar"></span> 成绩统计</a></li>
+        <li><a href="/"><span class="am-icon-sign-out"></span> 注销</a></li>
+      </ul>
+
+      <div class="am-panel am-panel-default admin-sidebar-panel">
+        <div class="am-panel-bd">
+          <p><span class="am-icon-bookmark"></span> 公告</p>
+          <p>时光静好，与君语；细水流年，与君同。—— Amaze UI</p>
+        </div>
+      </div>
+
+      <div class="am-panel am-panel-default admin-sidebar-panel">
+        <div class="am-panel-bd">
+          <p><span class="am-icon-tag"></span> wiki</p>
+          <p>Welcome to the Amaze UI wiki!</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- sidebar end -->
+
+  <!-- content start -->
+  <div class="admin-content">
+    <div class="admin-content-body">
+
+      <div class="am-cf am-padding">
+        <div class="am-fl am-cf">
+            <strong class="am-text-primary am-text-lg">
+                {% if indextype=='student' %}学生{% endif %}
+                {% if indextype=='teacher' %}教师{% endif %}
+                {% if indextype=='course' %}开课{% endif %}
+                {% if indextype=='allcourse' %}课程{% endif %}
+                信息
+            </strong>  <small>填写</small>
+        </div>
+      </div>
+
+<div class="am-g">
+  <div class="am-u-md-8 am-u-sm-centered">
+    <form class="am-form" method="post">
+      <fieldset class="am-form-set">
+
+          {% if indextype=='student' %}
+          <h6>学号</h6>
+            <input type="text" name="xh" id="xh" placeholder="输入学号" required>
+          <h6>姓名</h6>
+            <input type="text" name="xm" id="xm" placeholder="输入姓名" required>
+          <h6>性别</h6>
+          <label class="am-radio-inline">
+            <input type="radio" name="xb" value="男" data-am-ucheck required> 男
+          </label>
+          <label class="am-radio-inline">
+            <input type="radio" name="xb" value="女" data-am-ucheck> 女
+          </label>
+          <h6>出生日期</h6>
+            <input type="text" name="csrq" class="am-form-field" placeholder="选择出生日期" data-am-datepicker required />
+          <h6>籍贯</h6>
+            <input type="text" name="jg" class="am-form-field" placeholder="输入籍贯" required>
+          <h6>手机号码</h6>
+            <input type="tel" name="sjhm" id="sjhm" placeholder="输入手机号码" required>
+          <h6>学院</h6>
+              {% for i in allxy %}
+            <label class="am-radio-inline">
+              <input type="radio" name="xy" value={{ i[0] }} data-am-ucheck required> {{ i[0] }}
+            </label>
+              {% endfor %}
+          {% endif %}
+
+        {% if indextype=='teacher' %}
+          <h6>工号</h6>
+            <input type="text" name="gh" id="gh" placeholder="输入工号" required>
+          <h6>姓名</h6>
+            <input type="text" name="xm" id="xm" placeholder="输入姓名" required>
+          <h6>性别</h6>
+          <label class="am-radio-inline">
+            <input type="radio" name="xb" value="男" data-am-ucheck required> 男
+          </label>
+          <label class="am-radio-inline">
+            <input type="radio" name="xb" value="女" data-am-ucheck> 女
+          </label>
+          <h6>出生日期</h6>
+            <input type="text" name="csrq" class="am-form-field" placeholder="选择出生日期" data-am-datepicker required />
+          <h6>职称</h6>
+            <label class="am-radio-inline">
+            <input type="radio" name="xl" value="教授" data-am-ucheck required> 教授
+          </label>
+          <label class="am-radio-inline">
+            <input type="radio" name="xl" value="副教授" data-am-ucheck> 副教授
+          </label>
+          <label class="am-radio-inline">
+            <input type="radio" name="xl" value="讲师" data-am-ucheck> 讲师
+          </label>
+          <h6>基本工资</h6>
+            <input type="number" name="jbgz" id="jbgz" placeholder="输入基本工资" required>
+          <h6>学院</h6>
+            {% for i in allxy %}
+            <label class="am-radio-inline">
+              <input type="radio" name="xy" value={{ i[0] }} data-am-ucheck required> {{ i[0] }}
+            </label>
+              {% endfor %}
+          {% endif %}
+
+          {% if indextype=='course' %}
+          <h6>学期</h6>
+            <input type="text" name="xq" id="xq" placeholder="输入学期 YYYY-YYYYx季" required>
+          <h6>课号</h6>
+            <input type="text" name="kh" id="kh" placeholder="输入课号" required>
+          <h6>工号</h6>
+            <input type="text" name="gh" id="gh" placeholder="输入任课教师工号" required>
+          <h6>上课时间</h6>
+            <input type="text" name="sksj" id="sksj" placeholder="输入上课时间 星期xD-D" required>
+          <h6>选课容量</h6>
+            <input type="number" name="rl" id="rl" placeholder="输入课程人数容量" required>
+          {% endif %}
+
+          {% if indextype=='allcourse' %}
+          <h6>课名</h6>
+            <input type="text" name="km" id="km" placeholder="输入课名" required>
+          <h6>课号</h6>
+            <input type="text" name="kh" id="kh" placeholder="输入课号" required>
+          <h6>学分</h6>
+            <input type="number" name="xf" id="xf" placeholder="输入学分" required>
+          <h6>学时</h6>
+            <input type="number" name="xs" id="xs" placeholder="输入学时" required>
+          <h6>开课学院</h6>
+            {% for i in allxy %}
+            <label class="am-radio-inline">
+              <input type="radio" name="xy" value={{ i[0] }} data-am-ucheck required> {{ i[0] }}
+            </label>
+              {% endfor %}
+          {% endif %}
+
+      </fieldset>
+      <button type="submit" class="am-btn am-btn-primary am-btn-block">提交</button>
+    </form>
+  </div>
+</div>
+
+
+
+
+    <footer class="admin-content-footer">
+      <hr>
+      <p class="am-padding-left">CopyRight© 2019 上海大学 数据库原理(2) B1实验项目<br>
+        成员：
+        马心怡 16121961
+        李王子 16122739
+        陈诗园 16122873</p>
+    </footer>
+  </div>
+  <!-- content end -->
+
+</div>
+
+<a href="#" class="am-icon-btn am-icon-th-list am-show-sm-only admin-menu" data-am-offcanvas="{target: '#admin-offcanvas'}"></a>
+
+</div>
+</body>
+</html>

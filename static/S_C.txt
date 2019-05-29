@@ -1,0 +1,33 @@
+      <div class="am-g">
+        <div class="am-u-sm-12">
+          <table class="am-table am-table-bd am-table-striped admin-content-table">
+            <thead>
+            <tr>
+              <th>课程号</th><th>课程名</th><th>教师</th><th>学期</th><th>成绩</th><th>管理</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for course in courses %}
+            <tr>
+              <td>{{ course[0] }}</td>
+              <td>{{ course[1] }}</td>
+              <td>{{ course[2] }}</td>
+              <td>{{ course[3] }}</td>
+              <td>{{ course[4] }}</td>
+              <td>
+                <div class="am-dropdown" data-am-dropdown>
+                  <button class="am-btn am-btn-default am-btn-xs am-dropdown-toggle" data-am-dropdown-toggle><span class="am-icon-cog"></span> <span class="am-icon-caret-down"></span></button>
+                  <ul class="am-dropdown-content">
+                    <li><a href="#">1. 编辑</a></li>
+                    <li><a href="#">2. 下载</a></li>
+                    <li><a href="#">3. 删除</a></li>
+                  </ul>
+                </div>
+              </td>
+            </tr>
+            {% endfor %}
+
+            </tbody>
+          </table>
+        </div>
+      </div>

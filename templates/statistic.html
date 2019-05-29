@@ -1,0 +1,271 @@
+<!doctype html>
+<html class="no-js fixed-layout">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Amaze UI Admin index Examples</title>
+  <meta name="description" content="这是一个 index 页面">
+  <meta name="keywords" content="index">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <link rel="icon" type="image/png" href="../static/assets/i/favicon.png">
+  <link rel="apple-touch-icon-precomposed" href="../static/assets/i/app-icon72x72@2x.png">
+  <meta name="apple-mobile-web-app-title" content="Amaze UI" />
+  <link rel="stylesheet" href="../static/assets/css/amazeui.min.css"/>
+  <link rel="stylesheet" href="../static/assets/css/admin.css">
+  <script src="../static/assets/js/echarts.min.js"></script>
+  <script src="../static/assets/js/echarts-gl.min.js"></script>
+</head>
+<body>
+
+<header class="am-topbar am-topbar-inverse admin-header">
+  <div class="am-topbar-brand">
+    <strong>教学成绩</strong> <small>后台管理</small>
+  </div>
+
+  <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only" data-am-collapse="{target: '#topbar-collapse'}"><span class="am-sr-only">导航切换</span> <span class="am-icon-bars"></span></button>
+
+  <div class="am-collapse am-topbar-collapse" id="topbar-collapse">
+
+    <ul class="am-nav am-nav-pills am-topbar-nav am-topbar-right admin-header-list">
+      <li class="am-dropdown" data-am-dropdown>
+        <a class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:">
+          <span class="am-icon-users"></span> 管理员 <span class="am-icon-caret-down"></span>
+        </a>
+        <ul class="am-dropdown-content">
+          <li><a href="#"><span class="am-icon-user"></span> 资料</a></li>
+          <li><a href="#"><span class="am-icon-cog"></span> 设置</a></li>
+          <li><a href="/"><span class="am-icon-power-off"></span> 退出</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</header>
+
+<div class="am-cf admin-main">
+  <!-- sidebar start -->
+  <div class="admin-sidebar am-offcanvas" id="admin-offcanvas">
+    <div class="am-offcanvas-bar admin-offcanvas-bar">
+      <ul class="am-list admin-sidebar-list">
+        <li><a href="/admin_index"><span class="am-icon-home"></span> 首页</a></li>
+        <li><a href="{{ url_for('statistic', utype='student') }}"><span class="am-icon-table"></span> 学生统计</a></li>
+        <li><a href="{{ url_for('statistic', utype='teacher') }}"><span class="am-icon-pencil-square-o"></span> 教师统计</a></li>
+        <li><a href="{{ url_for('statistic', utype='course') }}"><span class="am-icon-calendar"></span> 成绩统计</a></li>
+          <li><a href="/"><span class="am-icon-sign-out"></span> 注销</a></li>
+      </ul>
+
+      <div class="am-panel am-panel-default admin-sidebar-panel">
+        <div class="am-panel-bd">
+          <p><span class="am-icon-bookmark"></span> 公告</p>
+          <p>时光静好，与君语；细水流年，与君同。—— Amaze UI</p>
+        </div>
+      </div>
+
+      <div class="am-panel am-panel-default admin-sidebar-panel">
+        <div class="am-panel-bd">
+          <p><span class="am-icon-tag"></span> wiki</p>
+          <p>Welcome to the Amaze UI wiki!</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- sidebar end -->
+
+  <!-- content start -->
+  <div class="admin-content">
+    <div class="admin-content-body">
+
+    {% if indextype=='student' %}
+
+      <div class="am-cf am-padding">
+        <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">学生</strong>  <small>统计</small></div>
+      </div>
+
+      <div class="am-cf am-padding" id="main" style="width: 600px;height: 400px;">
+        <script>
+            var myChart = echarts.init(document.getElementById('main'));
+
+            myChart.setOption({
+            backgroundColor: '#161627',
+                title:{
+                    text:'生源质量统计',
+                    textStyle: {
+                        color: '#eee'
+                    }
+                },
+                tooltip:{},
+                legend:{
+                    data:[{% for m in xl %}'{{ m }}', {% endfor %}],
+
+                },
+                radar:{
+                    indicator:[
+                        {% for m in xl %}
+                        {name:'{{ m }}',max:100},{% endfor %}
+                    ],
+                    shape:'circle',
+                    name: {
+                        textStyle: {
+                            color: 'rgb(238, 197, 102)'
+                        }
+                    },
+                    splitLine: {
+                        lineStyle: {
+                            color: [
+                                'rgba(238, 197, 102, 0.1)', 'rgba(238, 197, 102, 0.2)',
+                                'rgba(238, 197, 102, 0.4)', 'rgba(238, 197, 102, 0.6)',
+                                'rgba(238, 197, 102, 0.8)', 'rgba(238, 197, 102, 1)'
+                            ].reverse()
+                        }
+                    },
+                    splitArea: {
+                        show: false
+                    },
+                    axisLine: {
+                        lineStyle: {
+                            color: 'rgba(238, 197, 102, 0.5)'
+                        }
+                    }
+                },
+                series: [{
+                    name:'平均分',
+                    type:'radar',
+                    data:[[{% for n in rs %}{{ n }},{% endfor %}]],
+                    lineStyle : {
+                      normal: {
+                        width: 1,
+                        opacity: 0.5
+                      }
+                    },
+                    symbol: 'none',
+                    itemStyle: {
+                      normal: {
+                        color: '#F9713C'
+                      }
+                    },
+        areaStyle: {
+            normal: {
+                opacity: 0.1
+            }
+        }
+                }
+                ]
+            });
+
+        </script>
+      </div>
+    {% endif %}
+
+{% if indextype=='teacher' %}
+
+    <div class="am-cf am-padding">
+        <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">教师</strong>  <small>统计</small></div>
+      </div>
+
+      <div class="am-cf am-padding" id="main" style="width: 600px;height: 400px;">
+            <script>
+                var myChart = echarts.init(document.getElementById('main'));
+
+                myChart.setOption({
+                    title:{
+                        text:'教师职称分布'
+                    },
+                    tooltip:{
+                        trigger:'item',
+                        formatter: "{a} <br/>{b} : {c} ({d}%)"
+                    },
+                    legend:{
+                        data:['人数']
+                    },
+                    series: [{
+                        name:'人数',
+                        type:'pie',
+                        data:[
+                            {% for m,n in dic %}{name:'{{ m }}',value:{{ n }}},{% endfor %}
+                        ]
+                    }
+                    ]
+                });
+            </script>
+    </div>
+    {% endif %}
+
+{% if indextype=='course' %}
+
+    <div class="am-cf am-padding">
+        <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">课程</strong>  <small>统计</small></div>
+      </div>
+
+      <div class="am-cf am-padding" id="main" style="width: 600px;height: 400px;">
+            <script>
+                var myChart = echarts.init(document.getElementById('main'));
+                myChart.setOption({
+                    title:{
+                        text:'课程平均成绩'
+                    },
+                    tooltip:{},
+                    legend:{
+                        data:[{% for x in info %}'{{ x[1] }}',{% endfor %}]
+                    },
+                    xAxis:{
+                        data:[{% for m in info %}'{{ m[0] }}', {% endfor %}]
+                    },
+                    yAxis:{
+                        interval:10,
+                        splitLine: {show: false}
+                    },
+                    series: [
+                        {% for x in info %}
+                        {
+                        name:'{{ x[1] }}',
+                        type:'bar',
+                        barWidth:40,
+                        barGap: '10%',
+                        data:[
+                            {% for n in info %}
+                                {% if n[1]==x[1] %}
+                                    {{ n[2] }},
+                                {% else %}
+                                    0,
+                                {% endif %}
+                            {% endfor %}
+                        ]
+                        },{% endfor %}
+                    ]
+                });
+            </script>
+    </div>
+    {% endif %}
+
+    <footer class="admin-content-footer">
+      <hr>
+      <p class="am-padding-left">CopyRight© 2019 上海大学 数据库原理(2) B1实验项目<br>
+        成员：
+        马心怡 16121961
+        李王子 16122739
+        陈诗园 16122873</p>
+    </footer>
+  </div>
+  </div>
+  <!-- content end -->
+
+</div>
+
+<a href="#" class="am-icon-btn am-icon-th-list am-show-sm-only admin-menu" data-am-offcanvas="{target: '#admin-offcanvas'}"></a>
+
+
+<script src="../static/assets/js/jquery.min.js"></script>
+<script src="../static/assets/js/amazeui.min.js"></script>
+<script src="../static/assets/js/app.js"></script>
+<script>
+    $("#all").on('click',function() {
+        $("input[name='sub']").prop("checked", this.checked);
+    });
+    $("input[name='sub']").on('click',function() {
+        var $subs = $("input[name='sub']");
+        $("#all").prop("checked" , $subs.length == $subs.filter(":checked").length ? true :false);
+    });
+</script>
+</body>
+</html>

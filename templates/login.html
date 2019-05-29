@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head lang="en">
+  <meta charset="UTF-8">
+  <title>Login Page | Amaze UI Example</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <link rel="alternate icon" type="image/png" href="../static/assets/i/favicon.png">
+  <link rel="stylesheet" href="../static/assets/css/amazeui.min.css"/>
+  <script src="../static/assets/js/jquery.min.js"></script>
+  <script src="../static/assets/js/amazeui.min.js"></script>
+  <script src="../static/assets/js/app.js"></script>
+  <style>
+    .header {
+      text-align: center;
+    }
+    .header h1 {
+      font-size: 200%;
+      color: #333;
+      margin-top: 30px;
+    }
+    .header p {
+      font-size: 14px;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="header">
+  <div class="am-g">
+    <h1>登录</h1>
+    <p>Course Selection and Management<br>选课成绩管理系统</p>
+  </div>
+  <hr>
+</div>
+
+<div class="am-g">
+  <div class="am-u-lg-6 am-u-md-8 am-u-sm-centered">
+    <form method="post" class="am-form">
+      <label for="username">用户名:</label>
+      <input type="text" name="username" id="username" value="" placeholder="此处输入用户名">
+      <br>
+      <label for="password">密码:</label>
+      <input type="password" name="password" id="password" value="" placeholder="此处输入密码">
+      {% if alert == 1 %}
+        <div class="am-alert am-alert-warning" data-am-alert>
+          <button type="button" class="am-close">&times;</button>
+          用户名或密码错误！
+        </div>
+      {% endif %}
+      <br>
+      <div class="am-form-group">
+        <label for="ident">请选择身份</label>
+        <select name="ident" id="ident">
+          <option value="student">学生</option>
+          <option value="teacher">教师</option>
+          <option value="adminn">管理员</option>
+        </select>
+        <span class="am-form-caret"></span>
+      </div>
+      <br>
+      <div class="am-cf">
+        <input type="submit" name="" value="登 录" class="am-btn am-btn-primary am-btn-sm am-fl">
+      </div>
+    </form>
+    <hr>
+  </div>
+</div>
+
+<footer data-am-widget="footer" class="am-footer am-footer-default" data-am-footer="{  }">
+  <div class="am-footer-miscs ">
+    <p>
+      CopyRight© 2019 上海大学 数据库原理(2) B1实验项目
+    </p>
+    <br>
+    <p>
+      成员：
+      马心怡 16121961
+      李王子 16122739
+      陈诗园 16122873
+    </p>
+  </div>
+</footer>
+
+</body>
+
+</html>
