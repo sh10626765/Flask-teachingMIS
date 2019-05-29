@@ -1,1 +1,3 @@
 # Flask-teachingMIS
+- flask
+- pymssql
